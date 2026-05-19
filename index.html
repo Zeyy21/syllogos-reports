@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Syllogos Report</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231a1a2e'/%3E%3Cpath d='M16 6l-2 4 2 4-4 2 4 2-2 4 2 4 2-4-2-4 4-2-4-2 2-4z' fill='%237c9cff' stroke='%237c9cff' stroke-width='0.5' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%0A%20%20%3Crect%20width%3D%27100%27%20height%3D%27100%27%20rx%3D%2722%27%20fill%3D%27%23f8f7f4%27/%3E%0A%20%20%3Cg%20fill%3D%27none%27%20stroke%3D%27%2310234f%27%20stroke-width%3D%279%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%0A%20%20%20%20%3Cpath%20d%3D%27M29%2037%20L29%2076%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M29%2037%20L69%2023%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M29%2037%20L53%2056%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M69%2023%20L53%2056%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M53%2056%20L29%2076%27/%3E%0A%20%20%20%20%3Cpath%20d%3D%27M53%2056%20L76%2073%27/%3E%0A%20%20%3C/g%3E%0A%20%20%3Cg%20fill%3D%27%2310234f%27%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2729%27%20cy%3D%2737%27%20r%3D%2712%27/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2769%27%20cy%3D%2723%27%20r%3D%2712%27/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2729%27%20cy%3D%2776%27%20r%3D%2712%27/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2776%27%20cy%3D%2773%27%20r%3D%2712%27/%3E%0A%20%20%20%20%3Ccircle%20cx%3D%2753%27%20cy%3D%2756%27%20r%3D%279%27/%3E%0A%20%20%3C/g%3E%0A%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
@@ -21,6 +21,7 @@
   --border:rgba(255,255,255,0.06);
   --glow1:rgba(124,156,255,0.06);--glow2:rgba(167,139,250,0.04);--glow3:rgba(45,212,191,0.03);
   --toggle-bg:var(--surface-2);--toggle-icon:'🌙';
+  --logo-color:#ffffff;
 }
 [data-theme="light"]{
   --bg:#f8f7f4;--surface:rgba(0,0,0,0.02);--surface-2:rgba(0,0,0,0.04);--surface-3:rgba(0,0,0,0.06);
@@ -34,6 +35,7 @@
   --border:rgba(0,0,0,0.08);
   --glow1:rgba(74,108,247,0.04);--glow2:rgba(124,58,237,0.03);--glow3:rgba(13,148,136,0.02);
   --toggle-bg:var(--surface-2);--toggle-icon:'☀️';
+  --logo-color:#10234f;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -41,14 +43,24 @@ body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);c
 body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 20% 50%,var(--glow1) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,var(--glow2) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,var(--glow3) 0%,transparent 50%);pointer-events:none;z-index:0}
 
 /* Theme toggle */
-.theme-toggle{position:fixed;top:20px;right:20px;z-index:100;width:40px;height:40px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(12px);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.3s;color:var(--text)}
-.theme-toggle:hover{background:var(--surface-3);transform:scale(1.05)}
+.theme-toggle{position:fixed;top:20px;right:20px;z-index:100;width:78px;height:38px;padding:0;border:1px solid var(--glass-border);border-radius:999px;background:linear-gradient(135deg,var(--glass),var(--surface-2));backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:0 12px 36px rgba(0,0,0,0.18),inset 0 1px 0 rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);transition:transform 0.25s ease,border-color 0.25s ease,background 0.25s ease,box-shadow 0.25s ease;overflow:hidden}
+.theme-toggle::before{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 28% 20%,rgba(255,255,255,0.16),transparent 38%),radial-gradient(circle at 78% 82%,var(--accent-dim),transparent 42%);opacity:.85;pointer-events:none}
+.theme-toggle:hover{transform:translateY(-1px);border-color:rgba(124,156,255,0.28);box-shadow:0 16px 44px rgba(0,0,0,0.22),0 0 0 1px rgba(124,156,255,0.08),inset 0 1px 0 rgba(255,255,255,0.12)}
+.theme-toggle:active{transform:translateY(0) scale(.99)}
+.theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.toggle-track{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;align-items:center;width:100%;height:100%}
+.toggle-option{position:relative;z-index:3;display:flex;align-items:center;justify-content:center;opacity:.38;color:var(--text-sec);transition:opacity .25s ease,color .25s ease,transform .25s ease}
+.toggle-option svg{width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.toggle-thumb{position:absolute;z-index:2;top:4px;left:4px;width:30px;height:30px;border-radius:50%;background:linear-gradient(145deg,rgba(255,255,255,0.96),rgba(255,255,255,0.78));box-shadow:0 8px 20px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.9);transition:transform .34s cubic-bezier(.2,.8,.2,1),background .25s ease,box-shadow .25s ease}
+[data-theme="dark"] .toggle-thumb{transform:translateX(0);background:linear-gradient(145deg,#172554,#0b1228);box-shadow:0 8px 20px rgba(0,0,0,.35),0 0 18px rgba(124,156,255,.18),inset 0 1px 0 rgba(255,255,255,.12)}
+[data-theme="light"] .toggle-thumb{transform:translateX(40px);background:linear-gradient(145deg,#ffffff,#eef2ff);box-shadow:0 8px 18px rgba(16,35,79,.16),inset 0 1px 0 rgba(255,255,255,.95)}
+[data-theme="dark"] .toggle-option-dark,[data-theme="light"] .toggle-option-light{opacity:1;color:var(--logo-color);transform:scale(1.02)}
 
 .c{max-width:780px;margin:0 auto;padding:48px 24px 80px;position:relative;z-index:1}
 
 /* Logo + brand */
 .logo-row{display:flex;align-items:center;gap:12px;margin-bottom:36px}
-.logo-icon{width:32px;height:32px;flex-shrink:0}
+.logo-icon{width:32px;height:32px;flex-shrink:0;color:var(--logo-color);display:block}
 .logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;letter-spacing:0.3em;text-transform:uppercase;color:var(--text)}
 .logo-sub{font-size:10px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-top:2px}
 
@@ -99,21 +111,33 @@ h2{font-family:'Instrument Serif',serif;font-size:24px;font-weight:400;font-styl
 .lsp{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:sp 0.8s linear infinite;margin:0 auto 16px}
 @keyframes sp{to{transform:rotate(360deg)}}
 .er{text-align:center;padding:160px 24px;font-size:14px;color:var(--red)}
-@media(max-width:600px){.c{padding:32px 16px 60px}.sn{font-size:48px}.theme-toggle{top:12px;right:12px}}
+@media(max-width:600px){.c{padding:32px 16px 60px}.sn{font-size:48px}.theme-toggle{top:12px;right:12px;width:72px;height:36px}.toggle-thumb{width:28px;height:28px}.toggle-option svg{width:14px;height:14px}[data-theme="light"] .toggle-thumb{transform:translateX(36px)}}
 </style>
 </head>
 <body>
-<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" id="themeBtn">🌙</button>
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Switch to light theme" aria-pressed="true" id="themeBtn" type="button" title="Switch to light theme">
+  <span class="toggle-track" aria-hidden="true">
+    <span class="toggle-option toggle-option-dark">
+      <svg viewBox="0 0 24 24"><path d="M21 14.2A7.7 7.7 0 0 1 9.8 3a8.9 8.9 0 1 0 11.2 11.2Z"/></svg>
+    </span>
+    <span class="toggle-option toggle-option-light">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </span>
+    <span class="toggle-thumb"></span>
+  </span>
+</button>
 <div class="c" id="app"><div class="ld"><div class="lsp"></div>Loading report...</div></div>
 <script>
-function toggleTheme(){const h=document.documentElement;const t=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'🌙':'☀️';try{localStorage.setItem('syllogos-theme',t)}catch(e){}}
-try{const s=localStorage.getItem('syllogos-theme');if(s){document.documentElement.setAttribute('data-theme',s);document.getElementById('themeBtn').textContent=s==='dark'?'🌙':'☀️';}}catch(e){}
+function syncThemeToggle(t){const b=document.getElementById('themeBtn');if(!b)return;const d=t==='dark';b.setAttribute('aria-pressed',String(d));b.setAttribute('aria-label',d?'Switch to light theme':'Switch to dark theme');b.title=d?'Switch to light theme':'Switch to dark theme'}
+function applyTheme(t,persist){document.documentElement.setAttribute('data-theme',t);syncThemeToggle(t);if(persist){try{localStorage.setItem('syllogos-theme',t)}catch(e){}}}
+function toggleTheme(){const h=document.documentElement;const t=h.getAttribute('data-theme')==='dark'?'light':'dark';applyTheme(t,true)}
+try{const s=localStorage.getItem('syllogos-theme');if(s==='dark'||s==='light'){applyTheme(s,false)}else{syncThemeToggle(document.documentElement.getAttribute('data-theme')||'dark')}}catch(e){syncThemeToggle(document.documentElement.getAttribute('data-theme')||'dark')}
 
 const SU='https://nxyfxhfgrpkmzszlogxm.supabase.co',SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54eWZ4aGZncnBrbXpzemxvZ3htIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjM3MjksImV4cCI6MjA5NDUzOTcyOX0.e7aUVjz7Jw8pZfxKKlRCceU6eQEhyVKd8niPZ6qWQEA';
 const DL={methodological_rigor:'Methodological Rigor',scientific_validity:'Scientific Validity',originality_contribution:'Originality & Contribution',theoretical_consistency:'Theoretical Consistency',literature_mastery:'Literature Mastery',source_credibility:'Source Credibility',writing_quality:'Writing Quality',peer_evaluation_status:'Peer Evaluation Status',objectivity_reflexivity:'Objectivity & Reflexivity',implicit_legitimacy:'Implicit Legitimacy'};
 const DC={methodological_rigor:'#7c9cff',scientific_validity:'#7c9cff',originality_contribution:'#2dd4bf',literature_mastery:'#2dd4bf',theoretical_consistency:'#a78bfa',writing_quality:'#a78bfa',source_credibility:'#fbbf24',peer_evaluation_status:'#fbbf24',objectivity_reflexivity:'#f472b6',implicit_legitimacy:'#f472b6'};
 const TI={'Epistemic Core':['methodological_rigor','scientific_validity','originality_contribution','theoretical_consistency'],'Scholarly Craft':['literature_mastery','source_credibility','writing_quality','peer_evaluation_status'],'Socio-Epistemic Context':['objectivity_reflexivity','implicit_legitimacy']};
-const LOGO_SVG='<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon"><rect width="32" height="32" rx="8" fill="var(--accent-dim)" stroke="var(--glass-border)"/><path d="M16 6l-2 4 2 4-4 2 4 2-2 4 2 4 2-4-2-4 4-2-4-2 2-4z" fill="var(--accent)" stroke="var(--accent)" stroke-width="0.5" stroke-linejoin="round"/></svg>';
+const LOGO_SVG='<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon" aria-hidden="true"><g stroke="currentColor" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><path d="M29 37 L29 76"/><path d="M29 37 L69 23"/><path d="M29 37 L53 56"/><path d="M69 23 L53 56"/><path d="M53 56 L29 76"/><path d="M53 56 L76 73"/></g><g fill="currentColor"><circle cx="29" cy="37" r="12"/><circle cx="69" cy="23" r="12"/><circle cx="29" cy="76" r="12"/><circle cx="76" cy="73" r="12"/><circle cx="53" cy="56" r="9"/></g></svg>';
 
 function cc(c){return c>=.7?'ch':c>=.3?'cm':'clo'}function cl(c){return c>=.7?'High':c>=.3?'Moderate':'Low'}function lc(l){const k=(l||'').toLowerCase();return k.includes('exemplary')?'le':k.includes('strong')?'ls':k.includes('adequate')?'la':'lw'}function sc(s){const k=(s||'').toLowerCase();return k==='high'?'sbh':k==='medium'?'sbm':'sbl'}function e(s){if(!s)return'';const d=document.createElement('div');d.textContent=String(s);return d.innerHTML}function cn(c){return typeof c==='number'?c:c==='HIGH'?.9:c==='MEDIUM'?.6:.3}
 
