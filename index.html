@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syllogos Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fafaf9;
+    --surface: #ffffff;
+    --text: #1c1917;
+    --text-secondary: #78716c;
+    --text-tertiary: #a8a29e;
+    --border: #e7e5e4;
+    --accent: #1e3a5f;
+    --accent-light: #f0f4f8;
+    --green: #16a34a;
+    --amber: #d97706;
+    --red: #dc2626;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  .brand {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .meta {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+
+  .meta span { display: flex; align-items: center; gap: 6px; }
+
+  .score-section {
+    text-align: center;
+    padding: 40px 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 48px;
+  }
+
+  .score-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+
+  .score-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 56px;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .score-value span { font-size: 24px; color: var(--text-tertiary); }
+
+  .discipline {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .summary {
+    font-size: 15px;
+    color: var(--text-secondary);
+    margin-bottom: 48px;
+    line-height: 1.8;
+  }
+
+  .tier-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 16px;
+    margin-top: 40px;
+  }
+
+  .dimension-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 12px;
+  }
+
+  .dim-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .dim-name {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--text);
+  }
+
+  .dim-score {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--accent);
+  }
+
+  .dim-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-bottom: 16px;
+  }
+
+  .confidence-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+
+  .conf-high { background: var(--green); }
+  .conf-moderate { background: var(--amber); }
+  .conf-low { background: var(--red); }
+
+  .evidence-item {
+    font-size: 13px;
+    color: var(--text-secondary);
+    padding-left: 16px;
+    border-left: 2px solid var(--border);
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .rationale {
+    font-size: 14px;
+    color: var(--text);
+    background: var(--accent-light);
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 16px;
+    line-height: 1.7;
+  }
+
+  .section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 12px;
+  }
+
+  .bias-entry {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bias-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .bias-quote {
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-medium { background: #fef3c7; color: #92400e; }
+  .badge-low { background: #e0f2fe; color: #075985; }
+  .badge-high { background: #fee2e2; color: #991b1b; }
+
+  .cross-notes {
+    font-size: 14px;
+    color: var(--text-secondary);
+    background: var(--accent-light);
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 48px;
+    line-height: 1.8;
+    border-left: 3px solid var(--accent);
+  }
+
+  .footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    line-height: 1.8;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 120px 24px;
+    font-size: 15px;
+    color: var(--text-secondary);
+  }
+
+  .error {
+    text-align: center;
+    padding: 120px 24px;
+    font-size: 15px;
+    color: var(--red);
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 32px 16px 60px; }
+    h1 { font-size: 24px; }
+    .score-value { font-size: 44px; }
+    .meta { gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <div class="loading" id="loading">Loading report...</div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://nxyfxhfgrpkmzszlogxm.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54eWZ4aGZncnBrbXpzemxvZ3htIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjM3MjksImV4cCI6MjA5NDUzOTcyOX0.e7aUVjz7Jw8pZfxKKlRCceU6eQEhyVKd8niPZ6qWQEA';
+
+const DIMENSION_LABELS = {
+  methodological_rigor: 'Methodological Rigor',
+  scientific_validity: 'Scientific Validity',
+  originality_contribution: 'Originality & Contribution',
+  theoretical_consistency: 'Theoretical & Conceptual Consistency',
+  literature_mastery: 'Literature Mastery',
+  source_credibility: 'Source Credibility',
+  writing_quality: 'Writing Quality',
+  peer_evaluation_status: 'Peer Evaluation Status',
+  objectivity_reflexivity: 'Objectivity & Reflexivity',
+  implicit_legitimacy: 'Implicit Legitimacy'
+};
+
+const TIERS = {
+  'Epistemic Core': ['methodological_rigor', 'scientific_validity', 'originality_contribution', 'theoretical_consistency'],
+  'Scholarly Craft': ['literature_mastery', 'source_credibility', 'writing_quality', 'peer_evaluation_status'],
+  'Socio-Epistemic Context': ['objectivity_reflexivity', 'implicit_legitimacy']
+};
+
+function confidenceClass(c) {
+  if (c >= 0.7) return 'conf-high';
+  if (c >= 0.3) return 'conf-moderate';
+  return 'conf-low';
+}
+
+function confidenceLabel(c) {
+  if (c >= 0.7) return 'High';
+  if (c >= 0.3) return 'Moderate';
+  return 'Low';
+}
+
+function severityBadge(s) {
+  const severity = (s || '').toLowerCase();
+  if (severity === 'high') return '<span class="badge badge-high">High</span>';
+  if (severity === 'medium') return '<span class="badge badge-medium">Medium</span>';
+  return '<span class="badge badge-low">Low</span>';
+}
+
+function renderReport(report) {
+  const d = report.report_data;
+  if (!d) { document.getElementById('app').innerHTML = '<div class="error">Report data is empty.</div>'; return; }
+
+  const dims = d.dimensions || d.dimensionScores || d.componentScores || [];
+  const title = report.title || d.title || 'Untitled Report';
+  const score = d.compositeScore || d.composite_score || '—';
+  const confidence = d.overallConfidence || d.confidence || '';
+  const summary = d.assessmentSummary || d.assessment_summary || '';
+  const discipline = d.detectedDiscipline || d.detected_discipline || '';
+  const crossNotes = d.crossDimensionalNotes || d.cross_dimensional_notes || '';
+  const biasMap = d.biasHeatMap || d.bias_heatmap || [];
+  const citations = d.citationIntegrity || d.citation_integrity || null;
+  const governance = d.governanceFlags || d.governance_flags || [];
+  const model = d.model || '';
+  const date = report.created_at ? new Date(report.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+
+  let html = '';
+
+  // Header
+  html += '<div class="brand">Syllogos — CRAF 4.0 Assessment Report</div>';
+  html += `<h1>${esc(title)}</h1>`;
+  html += '<div class="meta">';
+  if (model) html += `<span>${esc(model)}</span>`;
+  if (date) html += `<span>${date}</span>`;
+  if (confidence) html += `<span>${esc(confidence)} confidence</span>`;
+  html += '</div>';
+
+  // Score
+  html += '<div class="score-section">';
+  html += '<div class="score-label">Composite Credibility Score</div>';
+  html += `<div class="score-value">${score}<span> / 10</span></div>`;
+  if (discipline) html += `<div class="discipline">${esc(discipline)}</div>`;
+  html += '</div>';
+
+  // Summary
+  if (summary) {
+    html += '<h2>Assessment Summary</h2>';
+    html += `<div class="summary">${esc(summary).replace(/\n/g, '<br>')}</div>`;
+  }
+
+  // Dimensions by tier
+  if (dims.length > 0) {
+    for (const [tierName, tierDims] of Object.entries(TIERS)) {
+      const tierScores = dims.filter(dim => {
+        const key = dim.dimension || dim.name || '';
+        return tierDims.includes(key);
+      });
+      if (tierScores.length === 0) continue;
+
+      html += `<div class="tier-label">${tierName}</div>`;
+      for (const dim of tierScores) {
+        const key = dim.dimension || dim.name || '';
+        const label = DIMENSION_LABELS[key] || key;
+        const conf = dim.confidence || 0;
+        html += '<div class="dimension-card">';
+        html += '<div class="dim-header">';
+        html += `<span class="dim-name">${esc(label)}</span>`;
+        html += `<span class="dim-score">${dim.score}</span>`;
+        html += '</div>';
+        html += '<div class="dim-meta">';
+        html += `<span>${esc(dim.level || '')}</span>`;
+        html += `<span><span class="confidence-dot ${confidenceClass(conf)}"></span>${confidenceLabel(conf)} confidence</span>`;
+        html += '</div>';
+
+        const evidence = dim.evidence || [];
+        for (const ev of evidence) {
+          html += `<div class="evidence-item">${esc(ev)}</div>`;
+        }
+
+        if (dim.rationale) {
+          html += `<div class="rationale">${esc(dim.rationale)}</div>`;
+        }
+
+        html += '</div>';
+      }
+    }
+
+    // Dimensions not in any tier
+    const allTierDims = Object.values(TIERS).flat();
+    const ungrouped = dims.filter(dim => !allTierDims.includes(dim.dimension || dim.name || ''));
+    if (ungrouped.length > 0) {
+      html += '<div class="tier-label">Additional Dimensions</div>';
+      for (const dim of ungrouped) {
+        const label = DIMENSION_LABELS[dim.dimension] || dim.dimension || dim.name || 'Unknown';
+        const conf = dim.confidence || 0;
+        html += '<div class="dimension-card">';
+        html += `<div class="dim-header"><span class="dim-name">${esc(label)}</span><span class="dim-score">${dim.score}</span></div>`;
+        html += `<div class="dim-meta"><span>${esc(dim.level || '')}</span><span><span class="confidence-dot ${confidenceClass(conf)}"></span>${confidenceLabel(conf)}</span></div>`;
+        if (dim.rationale) html += `<div class="rationale">${esc(dim.rationale)}</div>`;
+        html += '</div>';
+      }
+    }
+  }
+
+  // Cross-dimensional notes
+  if (crossNotes) {
+    html += '<div class="tier-label" style="margin-top:48px">Cross-Dimensional Analysis</div>';
+    html += `<div class="cross-notes">${esc(crossNotes)}</div>`;
+  }
+
+  // Bias heatmap
+  const realBias = (biasMap || []).filter(b => b.passage && b.passage !== 'N/A');
+  if (realBias.length > 0) {
+    html += '<div class="tier-label">Bias Heatmap</div>';
+    html += '<div class="section-card">';
+    for (const b of realBias) {
+      html += '<div class="bias-entry">';
+      html += `<div class="bias-quote">"${esc(b.passage)}"</div>`;
+      html += `<div>${severityBadge(b.severity)} <span style="font-size:12px;color:var(--text-tertiary);margin-left:8px">${esc(b.bias_type || b.biasType || '')}</span></div>`;
+      if (b.explanation) html += `<div style="font-size:13px;color:var(--text-secondary);margin-top:8px">${esc(b.explanation)}</div>`;
+      html += '</div>';
+    }
+    html += '</div>';
+  }
+
+  // Citation integrity
+  if (citations && typeof citations === 'string' && citations !== 'No issues detected' && citations !== 'No data') {
+    html += '<div class="tier-label">Citation Integrity</div>';
+    html += `<div class="section-card"><p style="font-size:14px;color:var(--text-secondary)">${esc(citations)}</p></div>`;
+  }
+
+  // Governance flags
+  const flags = Array.isArray(governance) ? governance : (governance ? [governance] : []);
+  const realFlags = flags.filter(f => f && f !== 'None');
+  if (realFlags.length > 0) {
+    html += '<div class="tier-label">Governance Flags</div>';
+    html += '<div class="section-card">';
+    for (const f of realFlags) html += `<p style="font-size:14px;color:var(--text-secondary);margin-bottom:8px">${esc(typeof f === 'string' ? f : JSON.stringify(f))}</p>`;
+    html += '</div>';
+  }
+
+  // Footer
+  html += '<div class="footer">';
+  html += 'Generated by <strong>Syllogos</strong> using the CRAF 4.0 framework.<br>';
+  html += 'AI-generated assessments should be interpreted alongside expert judgment.';
+  html += '</div>';
+
+  document.getElementById('app').innerHTML = html;
+  document.title = `Syllogos — ${title}`;
+}
+
+function esc(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = String(str);
+  return div.innerHTML;
+}
+
+async function loadReport() {
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('slug');
+
+  if (!slug) {
+    document.getElementById('app').innerHTML = '<div class="error">No report slug provided.</div>';
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/shared_reports?slug=eq.${encodeURIComponent(slug)}&select=*`,
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
+    );
+
+    if (!res.ok) throw new Error('Failed to fetch report');
+
+    const data = await res.json();
+    if (!data || data.length === 0) {
+      document.getElementById('app').innerHTML = '<div class="error">Report not found or has expired.</div>';
+      return;
+    }
+
+    renderReport(data[0]);
+  } catch (err) {
+    document.getElementById('app').innerHTML = `<div class="error">Failed to load report: ${esc(err.message)}</div>`;
+  }
+}
+
+loadReport();
+</script>
+</body>
+</html>
