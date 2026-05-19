@@ -5,571 +5,99 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Syllogos Report</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #fafaf9;
-    --surface: #ffffff;
-    --text: #1c1917;
-    --text-secondary: #78716c;
-    --text-tertiary: #a8a29e;
-    --border: #e7e5e4;
-    --accent: #1e3a5f;
-    --accent-light: #f0f4f8;
-    --green: #16a34a;
-    --amber: #d97706;
-    --red: #dc2626;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .container {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 60px 24px 80px;
-  }
-
-  .brand {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 24px;
-  }
-
-  h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 1.25;
-    color: var(--text);
-    margin-bottom: 16px;
-  }
-
-  .meta {
-    display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-    font-size: 13px;
-    color: var(--text-secondary);
-    padding-bottom: 32px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 40px;
-  }
-
-  .meta span { display: flex; align-items: center; gap: 6px; }
-
-  .score-section {
-    text-align: center;
-    padding: 40px 24px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 48px;
-  }
-
-  .score-label {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-tertiary);
-    margin-bottom: 8px;
-  }
-
-  .score-value {
-    font-family: 'DM Serif Display', serif;
-    font-size: 56px;
-    color: var(--accent);
-    line-height: 1;
-  }
-
-  .score-value span { font-size: 24px; color: var(--text-tertiary); }
-
-  .discipline {
-    margin-top: 12px;
-    font-size: 13px;
-    color: var(--text-secondary);
-  }
-
-  h2 {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    font-weight: 400;
-    margin-bottom: 16px;
-    color: var(--text);
-  }
-
-  .summary {
-    font-size: 15px;
-    color: var(--text-secondary);
-    margin-bottom: 48px;
-    line-height: 1.8;
-  }
-
-  .tier-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-tertiary);
-    margin-bottom: 16px;
-    margin-top: 40px;
-  }
-
-  .dimension-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 24px;
-    margin-bottom: 12px;
-  }
-
-  .dim-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 4px;
-  }
-
-  .dim-name {
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--text);
-  }
-
-  .dim-score {
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    color: var(--accent);
-  }
-
-  .dim-meta {
-    display: flex;
-    gap: 12px;
-    font-size: 12px;
-    color: var(--text-tertiary);
-    margin-bottom: 16px;
-  }
-
-  .confidence-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 4px;
-  }
-
-  .conf-high { background: var(--green); }
-  .conf-moderate { background: var(--amber); }
-  .conf-low { background: var(--red); }
-
-  .evidence-item {
-    font-size: 13px;
-    color: var(--text-secondary);
-    padding-left: 16px;
-    border-left: 2px solid var(--border);
-    margin-bottom: 10px;
-    line-height: 1.6;
-  }
-
-  .rationale {
-    font-size: 14px;
-    color: var(--text);
-    background: var(--accent-light);
-    padding: 16px;
-    border-radius: 8px;
-    margin-top: 16px;
-    line-height: 1.7;
-  }
-
-  .section-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 24px;
-    margin-bottom: 12px;
-  }
-
-  .bias-entry {
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .bias-entry:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
-  .bias-quote {
-    font-style: italic;
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-  }
-
-  .badge {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .badge-medium { background: #fef3c7; color: #92400e; }
-  .badge-low { background: #e0f2fe; color: #075985; }
-  .badge-high { background: #fee2e2; color: #991b1b; }
-
-  .cross-notes {
-    font-size: 14px;
-    color: var(--text-secondary);
-    background: var(--accent-light);
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 48px;
-    line-height: 1.8;
-    border-left: 3px solid var(--accent);
-  }
-
-  .footer {
-    margin-top: 64px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
-    text-align: center;
-    font-size: 12px;
-    color: var(--text-tertiary);
-    line-height: 1.8;
-  }
-
-  .loading {
-    text-align: center;
-    padding: 120px 24px;
-    font-size: 15px;
-    color: var(--text-secondary);
-  }
-
-  .error {
-    text-align: center;
-    padding: 120px 24px;
-    font-size: 15px;
-    color: var(--red);
-  }
-
-  @media (max-width: 600px) {
-    .container { padding: 32px 16px 60px; }
-    h1 { font-size: 24px; }
-    .score-value { font-size: 44px; }
-    .meta { gap: 12px; }
-  }
+:root{--bg:#0c0c0f;--surface:rgba(255,255,255,0.03);--surface-2:rgba(255,255,255,0.06);--surface-3:rgba(255,255,255,0.09);--glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);--text:#f0ede8;--text-sec:rgba(240,237,232,0.55);--text-tri:rgba(240,237,232,0.3);--accent:#7c9cff;--accent-dim:rgba(124,156,255,0.12);--green:#4ade80;--green-dim:rgba(74,222,128,0.12);--amber:#fbbf24;--amber-dim:rgba(251,191,36,0.12);--red:#f87171;--red-dim:rgba(248,113,113,0.12);--pink:#f472b6;--teal:#2dd4bf;--purple:#a78bfa;--border:rgba(255,255,255,0.06);--r:16px;--rs:10px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
+body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 20% 50%,rgba(124,156,255,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(167,139,250,0.04) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,rgba(45,212,191,0.03) 0%,transparent 50%);pointer-events:none;z-index:0}
+.c{max-width:780px;margin:0 auto;padding:48px 24px 80px;position:relative;z-index:1}
+.brand{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:32px;padding:8px 16px;background:var(--accent-dim);border:1px solid rgba(124,156,255,0.15);border-radius:100px}
+h1{font-family:'Instrument Serif',serif;font-size:clamp(28px,5vw,40px);font-weight:400;font-style:italic;line-height:1.2;margin-bottom:20px;letter-spacing:-0.01em}
+.mr{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:40px}
+.pill{font-size:12px;font-weight:500;padding:5px 12px;border-radius:100px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-sec)}
+.pill-g{background:var(--green-dim);border-color:rgba(74,222,128,0.2);color:var(--green)}
+.sh{text-align:center;padding:48px 24px;background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r);margin-bottom:48px;backdrop-filter:blur(20px);position:relative;overflow:hidden}
+.sh::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.sl{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-tri);margin-bottom:12px}
+.sn{font-family:'Instrument Serif',serif;font-size:64px;font-style:italic;line-height:1}.sn span{font-size:28px;color:var(--text-tri);font-style:normal}
+.dt{margin-top:16px;font-size:13px;color:var(--text-sec)}
+h2{font-family:'Instrument Serif',serif;font-size:24px;font-weight:400;font-style:italic;margin-bottom:16px}
+.st{font-size:15px;color:var(--text-sec);line-height:1.85;margin-bottom:48px}
+.tl{font-size:10px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-tri);margin-bottom:16px;margin-top:48px;padding-left:2px}
+.ig{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:32px}
+.ic{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--rs);padding:20px}
+.il{font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-tri);margin-bottom:6px}
+.iv{font-size:18px;font-weight:700}
+.co{background:var(--accent-dim);border:1px solid rgba(124,156,255,0.12);border-left:3px solid var(--accent);border-radius:var(--rs);padding:24px;margin-bottom:40px;font-size:15px;line-height:1.8;font-style:italic}
+.cl{font-size:10px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-style:normal}
+.dc{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--rs);padding:24px;margin-bottom:10px;transition:background 0.2s}
+.dc:hover{background:var(--surface-2)}
+.dh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.dn{font-weight:700;font-size:14px}
+.ds{font-family:'Instrument Serif',serif;font-size:24px;font-style:italic}
+.db{height:3px;background:var(--surface-3);border-radius:2px;margin-bottom:12px;overflow:hidden}
+.df{height:100%;border-radius:2px}
+.dm{display:flex;gap:12px;align-items:center;margin-bottom:14px;font-size:12px;color:var(--text-tri)}
+.lb{font-size:11px;font-weight:600;padding:2px 10px;border-radius:100px}
+.le{background:var(--green-dim);color:var(--green)}.ls{background:var(--accent-dim);color:var(--accent)}.la{background:var(--amber-dim);color:var(--amber)}.lw{background:var(--red-dim);color:var(--red)}
+.cd{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}
+.ch{background:var(--green)}.cm{background:var(--amber)}.clo{background:var(--red)}
+.ei{font-size:13px;color:var(--text-sec);padding:10px 16px;border-left:2px solid var(--border);margin-bottom:8px;line-height:1.65}
+.rb{font-size:14px;background:var(--surface-2);padding:16px 20px;border-radius:8px;margin-top:14px;line-height:1.75;border:1px solid var(--border)}
+.fc{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--rs);padding:20px;margin-bottom:10px}
+.fq{font-style:italic;font-size:14px;color:var(--text-sec);margin-bottom:10px;line-height:1.7}
+.fd{font-size:13px;color:var(--text-tri);line-height:1.6}
+.sb{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:0.05em}
+.sbh{background:var(--red-dim);color:var(--red)}.sbm{background:var(--amber-dim);color:var(--amber)}.sbl{background:var(--accent-dim);color:var(--accent)}
+.gf{background:var(--amber-dim);border:1px solid rgba(251,191,36,0.15);border-radius:var(--rs);padding:16px 20px;margin-bottom:10px;font-size:14px;color:var(--amber);line-height:1.7}
+.ft{margin-top:72px;padding-top:24px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--text-tri);line-height:2}
+.ft strong{color:var(--text-sec);font-weight:600}
+.ld{text-align:center;padding:160px 24px;font-size:14px;color:var(--text-sec)}
+.ls2{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:sp 0.8s linear infinite;margin:0 auto 16px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.er{text-align:center;padding:160px 24px;font-size:14px;color:var(--red)}
+@media(max-width:600px){.c{padding:32px 16px 60px}.sn{font-size:48px}}
 </style>
 </head>
 <body>
-
-<div class="container" id="app">
-  <div class="loading" id="loading">Loading report...</div>
-</div>
-
+<div class="c" id="app"><div class="ld"><div class="ls2"></div>Loading report...</div></div>
 <script>
-const SUPABASE_URL = 'https://nxyfxhfgrpkmzszlogxm.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54eWZ4aGZncnBrbXpzemxvZ3htIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjM3MjksImV4cCI6MjA5NDUzOTcyOX0.e7aUVjz7Jw8pZfxKKlRCceU6eQEhyVKd8niPZ6qWQEA';
+const U='https://nxyfxhfgrpkmzszlogxm.supabase.co',K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54eWZ4aGZncnBrbXpzemxvZ3htIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjM3MjksImV4cCI6MjA5NDUzOTcyOX0.e7aUVjz7Jw8pZfxKKlRCceU6eQEhyVKd8niPZ6qWQEA';
+const DL={methodological_rigor:'Methodological Rigor',scientific_validity:'Scientific Validity',originality_contribution:'Originality & Contribution',theoretical_consistency:'Theoretical Consistency',literature_mastery:'Literature Mastery',source_credibility:'Source Credibility',writing_quality:'Writing Quality',peer_evaluation_status:'Peer Evaluation Status',objectivity_reflexivity:'Objectivity & Reflexivity',implicit_legitimacy:'Implicit Legitimacy'};
+const DC={methodological_rigor:'#7c9cff',scientific_validity:'#7c9cff',originality_contribution:'#2dd4bf',literature_mastery:'#2dd4bf',theoretical_consistency:'#a78bfa',writing_quality:'#a78bfa',source_credibility:'#fbbf24',peer_evaluation_status:'#fbbf24',objectivity_reflexivity:'#f472b6',implicit_legitimacy:'#f472b6'};
+const T={'Epistemic Core':['methodological_rigor','scientific_validity','originality_contribution','theoretical_consistency'],'Scholarly Craft':['literature_mastery','source_credibility','writing_quality','peer_evaluation_status'],'Socio-Epistemic Context':['objectivity_reflexivity','implicit_legitimacy']};
+function cc(c){return c>=.7?'ch':c>=.3?'cm':'clo'}function cl2(c){return c>=.7?'High':c>=.3?'Moderate':'Low'}function lc(l){const k=(l||'').toLowerCase();return k.includes('exemplary')?'le':k.includes('strong')?'ls':k.includes('adequate')?'la':'lw'}function sc(s){const k=(s||'').toLowerCase();return k==='high'?'sbh':k==='medium'?'sbm':'sbl'}function e(s){if(!s)return'';const d=document.createElement('div');d.textContent=String(s);return d.innerHTML}function cn(c){return typeof c==='number'?c:c==='HIGH'?.9:c==='MEDIUM'?.6:.3}
 
-const DIMENSION_LABELS = {
-  methodological_rigor: 'Methodological Rigor',
-  scientific_validity: 'Scientific Validity',
-  originality_contribution: 'Originality & Contribution',
-  theoretical_consistency: 'Theoretical & Conceptual Consistency',
-  literature_mastery: 'Literature Mastery',
-  source_credibility: 'Source Credibility',
-  writing_quality: 'Writing Quality',
-  peer_evaluation_status: 'Peer Evaluation Status',
-  objectivity_reflexivity: 'Objectivity & Reflexivity',
-  implicit_legitimacy: 'Implicit Legitimacy'
-};
+function R(r){
+const d=r.report_data;if(!d){document.getElementById('app').innerHTML='<div class="er">Report data is empty.</div>';return}
+const dims=d.dimensions||d.dimensionScores||d.componentScores||(d.humanReview&&d.humanReview.criticalDimensions?d.humanReview.criticalDimensions:[])||[];
+const title=r.title||d.title||'Untitled',score=d.compositeScore||d.composite_score||d.overallScore||null,conf=d.overallConfidence||d.confidence||(d.metadata&&d.metadata.confidence)||'',summary=d.assessmentSummary||d.assessment_summary||d.summary||'',disc=d.detectedDiscipline||d.detected_discipline||'',cross=d.crossDimensionalNotes||d.cross_dimensional_notes||'',weakest=d.weakestDimensions||d.weakest_dimensions||'',bias=d.biasHeatMap||d.bias_heatmap||d.biasHeatmap||[],cite=d.citationIntegrity||d.citation_integrity||null,gov=d.governanceFlags||d.governance_flags||[],model=d.model||(d.metadata&&d.metadata.model)||'',action=d.actionId||d.action||'',tone=d.tone||'',reading=d.readingLevel||'',thesis=d.keyThesis||'',ba=d.humanReview&&d.humanReview.biasAudit||'',fm=d.humanReview&&d.humanReview.failureModeAnalysis||'',al=d.aiLimitations||'',dt=r.created_at?new Date(r.created_at).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}):'';
+let h='';
+h+=`<div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>Syllogos &mdash; CRAF 4.0</div>`;
+h+=`<h1>${e(title)}</h1>`;
+h+='<div class="mr">';if(model)h+=`<span class="pill">${e(model)}</span>`;if(dt)h+=`<span class="pill">${dt}</span>`;if(conf)h+=`<span class="pill pill-g">${e(String(conf).toUpperCase())} CONF</span>`;h+='</div>';
+if(score!==null){h+='<div class="sh"><div class="sl">Composite Credibility Score</div>';h+=`<div class="sn">${score}<span> / 10</span></div>`;if(disc)h+=`<div class="dt">${e(disc)}</div>`;h+='</div>';}
+if(summary){h+='<h2>Assessment</h2>';h+=`<div class="st">${e(summary).replace(/\n\n/g,'</div><div class="st">').replace(/\n/g,'<br>')}</div>`;}
+if(tone||reading){h+='<div class="ig">';if(tone)h+=`<div class="ic"><div class="il">Tone</div><div class="iv">${e(tone)}</div></div>`;if(reading)h+=`<div class="ic"><div class="il">Reading Level</div><div class="iv">${e(reading)}</div></div>`;h+='</div>';}
+if(thesis){h+=`<div class="co"><div class="cl">Key Thesis</div>${e(thesis)}</div>`;}
+const isC=dims.length>0&&dims[0]&&(dims[0].dimension||dims[0].rationale);
+if(isC){for(const[tn,tk]of Object.entries(T)){const td=dims.filter(x=>tk.includes(x.dimension||x.name||''));if(!td.length)continue;h+=`<div class="tl">${tn}</div>`;for(const dm of td){const k=dm.dimension||dm.name||'',lb=DL[k]||k,c=cn(dm.confidence),col=DC[k]||'#7c9cff',p=Math.min((dm.score/10)*100,100);h+='<div class="dc">';h+=`<div class="dh"><span class="dn">${e(lb)}</span><span class="ds">${dm.score}</span></div>`;h+=`<div class="db"><div class="df" style="width:${p}%;background:${col}"></div></div>`;h+='<div class="dm">';if(dm.level)h+=`<span class="lb ${lc(dm.level)}">${e(dm.level)}</span>`;h+=`<span><span class="cd ${cc(c)}"></span>${cl2(c)}</span>`;h+='</div>';const ev=dm.evidence||[];for(const x of ev)h+=`<div class="ei">${e(x)}</div>`;if(dm.rationale)h+=`<div class="rb">${e(dm.rationale)}</div>`;h+='</div>';}}
+const ak=Object.values(T).flat();const ug=dims.filter(x=>!ak.includes(x.dimension||x.name||''));if(ug.length){h+='<div class="tl">Additional</div>';for(const dm of ug){h+='<div class="dc">';h+=`<div class="dh"><span class="dn">${e(DL[dm.dimension]||dm.dimension||'')}</span><span class="ds">${dm.score}</span></div>`;if(dm.rationale)h+=`<div class="rb">${e(dm.rationale)}</div>`;h+='</div>';}}}
+else if(dims.length>0){h+='<div class="tl">Assessment Dimensions</div>';for(const dm of dims){const lb=dm.criterion||dm.name||'Dimension',mx=dm.maxScore||10,c=cn(dm.confidence),p=Math.min((dm.score/mx)*100,100);h+='<div class="dc">';h+=`<div class="dh"><span class="dn">${e(lb)}</span><span class="ds">${dm.score}<span style="font-size:14px;color:var(--text-tri)">/${mx}</span></span></div>`;h+=`<div class="db"><div class="df" style="width:${p}%;background:var(--accent)"></div></div>`;h+=`<div class="dm"><span><span class="cd ${cc(c)}"></span>${cl2(c)}</span></div>`;const ev=dm.evidence||[];for(const x of ev)h+=`<div class="ei">${e(x)}</div>`;h+='</div>';}}
+if(cross){h+='<div class="tl">Cross-Dimensional Analysis</div>';h+=`<div class="co"><div class="cl">Patterns</div>${e(cross)}</div>`;}
+if(weakest){h+='<div class="tl">Areas for Improvement</div>';h+=`<div class="fc"><div class="fd" style="color:var(--text-sec)">${e(weakest)}</div></div>`;}
+const rb=(bias||[]).filter(b=>b.passage&&b.passage!=='N/A');if(rb.length){h+='<div class="tl">Bias Heatmap</div>';for(const b of rb){h+='<div class="fc">';h+=`<div class="fq">"${e(b.passage)}"</div>`;h+=`<div><span class="sb ${sc(b.severity)}">${e(b.severity)}</span> <span style="font-size:12px;color:var(--text-tri);margin-left:8px">${e(b.bias_type||b.biasType||'')}</span></div>`;if(b.explanation)h+=`<div class="fd" style="margin-top:10px">${e(b.explanation)}</div>`;h+='</div>';}}
+if(ba){h+='<div class="tl">Bias Audit</div>';h+=`<div class="fc"><div class="fd" style="color:var(--text-sec)">${e(ba)}</div></div>`;}
+if(cite&&typeof cite==='string'&&cite!=='No issues detected'&&cite!=='No data'){h+='<div class="tl">Citation Integrity</div>';h+=`<div class="fc"><div class="fd" style="color:var(--text-sec)">${e(cite)}</div></div>`;}
+const fl=Array.isArray(gov)?gov:(gov?[gov]:[]);const rf=fl.filter(f=>f&&f!=='None');if(rf.length){h+='<div class="tl">Governance Flags</div>';for(const f of rf)h+=`<div class="gf">${e(typeof f==='string'?f:JSON.stringify(f))}</div>`;}
+if(fm){h+='<div class="tl">Failure Mode Analysis</div>';h+=`<div class="fc"><div class="fd" style="color:var(--text-sec)">${e(fm)}</div></div>`;}
+if(al&&typeof al==='object'){h+='<div class="tl">AI Limitations</div>';h+='<div class="fc">';for(const[k,v]of Object.entries(al)){if(v)h+=`<div class="fd" style="margin-bottom:12px;color:var(--text-sec)"><strong style="color:var(--text)">${e(k.replace(/([A-Z])/g,' $1').trim())}:</strong> ${e(v)}</div>`;}h+='</div>';}
+h+='<div class="ft">Generated by <strong>Syllogos</strong> using the CRAF 4.0 framework.<br>AI-generated assessments should be interpreted alongside expert judgment.</div>';
+document.getElementById('app').innerHTML=h;document.title='Syllogos \u2014 '+title;}
 
-const TIERS = {
-  'Epistemic Core': ['methodological_rigor', 'scientific_validity', 'originality_contribution', 'theoretical_consistency'],
-  'Scholarly Craft': ['literature_mastery', 'source_credibility', 'writing_quality', 'peer_evaluation_status'],
-  'Socio-Epistemic Context': ['objectivity_reflexivity', 'implicit_legitimacy']
-};
-
-function confidenceClass(c) {
-  if (c >= 0.7) return 'conf-high';
-  if (c >= 0.3) return 'conf-moderate';
-  return 'conf-low';
-}
-
-function confidenceLabel(c) {
-  if (c >= 0.7) return 'High';
-  if (c >= 0.3) return 'Moderate';
-  return 'Low';
-}
-
-function severityBadge(s) {
-  const severity = (s || '').toLowerCase();
-  if (severity === 'high') return '<span class="badge badge-high">High</span>';
-  if (severity === 'medium') return '<span class="badge badge-medium">Medium</span>';
-  return '<span class="badge badge-low">Low</span>';
-}
-
-function renderReport(report) {
-  const d = report.report_data;
-  if (!d) { document.getElementById('app').innerHTML = '<div class="error">Report data is empty.</div>'; return; }
-
-  // Flexible field resolution — handles multiple naming conventions
-  const dims = d.dimensions || d.dimensionScores || d.componentScores || 
-    (d.humanReview && d.humanReview.criticalDimensions ? d.humanReview.criticalDimensions : []);
-  const title = report.title || d.title || 'Untitled Report';
-  const score = d.compositeScore || d.composite_score || d.overallScore || '—';
-  const confidence = d.overallConfidence || d.confidence || (d.metadata && d.metadata.confidence) || '';
-  const summary = d.assessmentSummary || d.assessment_summary || d.summary || '';
-  const discipline = d.detectedDiscipline || d.detected_discipline || '';
-  const crossNotes = d.crossDimensionalNotes || d.cross_dimensional_notes || '';
-  const biasMap = d.biasHeatMap || d.bias_heatmap || d.biasHeatmap || [];
-  const citations = d.citationIntegrity || d.citation_integrity || null;
-  const governance = d.governanceFlags || d.governance_flags || [];
-  const model = d.model || (d.metadata && d.metadata.model) || '';
-  const actionId = d.actionId || d.action || '';
-  const tone = d.tone || '';
-  const readingLevel = d.readingLevel || '';
-  const keyThesis = d.keyThesis || '';
-  const biasAudit = d.humanReview && d.humanReview.biasAudit || '';
-  const failureMode = d.humanReview && d.humanReview.failureModeAnalysis || '';
-  const comparativeAnchoring = d.humanReview && d.humanReview.comparativeAnchoring || '';
-  const aiLimitations = d.aiLimitations || '';
-  const date = report.created_at ? new Date(report.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
-
-  let html = '';
-
-  // Header
-  html += '<div class="brand">Syllogos — CRAF 4.0 Assessment Report</div>';
-  html += `<h1>${esc(title)}</h1>`;
-  html += '<div class="meta">';
-  if (model) html += `<span>${esc(model)}</span>`;
-  if (date) html += `<span>${date}</span>`;
-  if (confidence) html += `<span>${esc(confidence)} confidence</span>`;
-  html += '</div>';
-
-  // Score
-  html += '<div class="score-section">';
-  html += '<div class="score-label">Composite Credibility Score</div>';
-  html += `<div class="score-value">${score}<span> / 10</span></div>`;
-  if (discipline) html += `<div class="discipline">${esc(discipline)}</div>`;
-  html += '</div>';
-
-  // Summary
-  if (summary) {
-    html += '<h2>Assessment Summary</h2>';
-    html += `<div class="summary">${esc(summary).replace(/\n/g, '<br>')}</div>`;
-  }
-
-  // Summarize-specific fields (tone, reading level, key thesis)
-  if (tone || readingLevel) {
-    html += '<div style="display:flex;gap:16px;margin-bottom:32px;flex-wrap:wrap">';
-    if (tone) html += `<div class="section-card" style="flex:1;min-width:200px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-tertiary);margin-bottom:6px">Tone</div><div style="font-size:18px;font-weight:700">${esc(tone)}</div></div>`;
-    if (readingLevel) html += `<div class="section-card" style="flex:1;min-width:200px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-tertiary);margin-bottom:6px">Reading Level</div><div style="font-size:18px;font-weight:700">${esc(readingLevel)}</div></div>`;
-    html += '</div>';
-  }
-
-  if (keyThesis) {
-    html += '<div class="cross-notes" style="margin-bottom:40px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);margin-bottom:8px">Key Thesis</div>' + esc(keyThesis) + '</div>';
-  }
-
-  // Dimensions — handle both CRAF 4.0 format and humanReview.criticalDimensions format
-  if (dims.length > 0) {
-    const isCRAF = dims[0] && (dims[0].dimension || dims[0].rationale);
-
-    if (isCRAF) {
-      // CRAF 4.0 full assessment format
-      for (const [tierName, tierDims] of Object.entries(TIERS)) {
-        const tierScores = dims.filter(dim => {
-          const key = dim.dimension || dim.name || '';
-          return tierDims.includes(key);
-        });
-        if (tierScores.length === 0) continue;
-
-        html += `<div class="tier-label">${tierName}</div>`;
-        for (const dim of tierScores) {
-          const key = dim.dimension || dim.name || '';
-          const label = DIMENSION_LABELS[key] || key;
-          const conf = typeof dim.confidence === 'number' ? dim.confidence : (dim.confidence === 'HIGH' ? 0.9 : dim.confidence === 'MEDIUM' ? 0.6 : 0.3);
-          html += '<div class="dimension-card">';
-          html += '<div class="dim-header">';
-          html += `<span class="dim-name">${esc(label)}</span>`;
-          html += `<span class="dim-score">${dim.score}</span>`;
-          html += '</div>';
-          html += '<div class="dim-meta">';
-          html += `<span>${esc(dim.level || '')}</span>`;
-          html += `<span><span class="confidence-dot ${confidenceClass(conf)}"></span>${confidenceLabel(conf)} confidence</span>`;
-          html += '</div>';
-
-          const evidence = dim.evidence || [];
-          for (const ev of evidence) {
-            html += `<div class="evidence-item">${esc(ev)}</div>`;
-          }
-
-          if (dim.rationale) {
-            html += `<div class="rationale">${esc(dim.rationale)}</div>`;
-          }
-
-          html += '</div>';
-        }
-      }
-
-      // Ungrouped dimensions
-      const allTierDims = Object.values(TIERS).flat();
-      const ungrouped = dims.filter(dim => !allTierDims.includes(dim.dimension || dim.name || ''));
-      if (ungrouped.length > 0) {
-        html += '<div class="tier-label">Additional Dimensions</div>';
-        for (const dim of ungrouped) {
-          const label = DIMENSION_LABELS[dim.dimension] || dim.dimension || dim.name || 'Unknown';
-          const conf = typeof dim.confidence === 'number' ? dim.confidence : 0.5;
-          html += '<div class="dimension-card">';
-          html += `<div class="dim-header"><span class="dim-name">${esc(label)}</span><span class="dim-score">${dim.score}</span></div>`;
-          html += `<div class="dim-meta"><span>${esc(dim.level || '')}</span><span><span class="confidence-dot ${confidenceClass(conf)}"></span>${confidenceLabel(conf)}</span></div>`;
-          if (dim.rationale) html += `<div class="rationale">${esc(dim.rationale)}</div>`;
-          html += '</div>';
-        }
-      }
-    } else {
-      // humanReview.criticalDimensions format (summarize/other actions)
-      html += '<div class="tier-label">Assessment Dimensions</div>';
-      for (const dim of dims) {
-        const label = dim.criterion || dim.name || 'Dimension';
-        const maxScore = dim.maxScore || 10;
-        const conf = dim.confidence === 'HIGH' ? 0.9 : dim.confidence === 'MEDIUM' ? 0.6 : 0.3;
-        html += '<div class="dimension-card">';
-        html += '<div class="dim-header">';
-        html += `<span class="dim-name">${esc(label)}</span>`;
-        html += `<span class="dim-score">${dim.score}<span style="font-size:14px;color:var(--text-tertiary)"> / ${maxScore}</span></span>`;
-        html += '</div>';
-        html += '<div class="dim-meta">';
-        html += `<span><span class="confidence-dot ${confidenceClass(conf)}"></span>${confidenceLabel(conf)} confidence</span>`;
-        html += '</div>';
-        const evidence = dim.evidence || [];
-        for (const ev of evidence) {
-          html += `<div class="evidence-item">${esc(ev)}</div>`;
-        }
-        html += '</div>';
-      }
-    }
-  }
-
-  // Bias audit (from humanReview)
-  if (biasAudit) {
-    html += '<div class="tier-label">Bias Audit</div>';
-    html += `<div class="section-card"><p style="font-size:14px;color:var(--text-secondary);line-height:1.8">${esc(biasAudit)}</p></div>`;
-  }
-
-  // Failure mode analysis (from humanReview)
-  if (failureMode) {
-    html += '<div class="tier-label">Failure Mode Analysis</div>';
-    html += `<div class="section-card"><p style="font-size:14px;color:var(--text-secondary);line-height:1.8">${esc(failureMode)}</p></div>`;
-  }
-
-  // AI Limitations
-  if (aiLimitations && typeof aiLimitations === 'object') {
-    html += '<div class="tier-label">AI Limitations</div>';
-    html += '<div class="section-card">';
-    for (const [key, val] of Object.entries(aiLimitations)) {
-      if (val) html += `<p style="font-size:14px;color:var(--text-secondary);margin-bottom:12px;line-height:1.8"><strong style="color:var(--text)">${esc(key.replace(/([A-Z])/g, ' $1').trim())}:</strong> ${esc(val)}</p>`;
-    }
-    html += '</div>';
-  }
-
-  // Cross-dimensional notes
-  if (crossNotes) {
-    html += '<div class="tier-label" style="margin-top:48px">Cross-Dimensional Analysis</div>';
-    html += `<div class="cross-notes">${esc(crossNotes)}</div>`;
-  }
-
-  // Bias heatmap
-  const realBias = (biasMap || []).filter(b => b.passage && b.passage !== 'N/A');
-  if (realBias.length > 0) {
-    html += '<div class="tier-label">Bias Heatmap</div>';
-    html += '<div class="section-card">';
-    for (const b of realBias) {
-      html += '<div class="bias-entry">';
-      html += `<div class="bias-quote">"${esc(b.passage)}"</div>`;
-      html += `<div>${severityBadge(b.severity)} <span style="font-size:12px;color:var(--text-tertiary);margin-left:8px">${esc(b.bias_type || b.biasType || '')}</span></div>`;
-      if (b.explanation) html += `<div style="font-size:13px;color:var(--text-secondary);margin-top:8px">${esc(b.explanation)}</div>`;
-      html += '</div>';
-    }
-    html += '</div>';
-  }
-
-  // Citation integrity
-  if (citations && typeof citations === 'string' && citations !== 'No issues detected' && citations !== 'No data') {
-    html += '<div class="tier-label">Citation Integrity</div>';
-    html += `<div class="section-card"><p style="font-size:14px;color:var(--text-secondary)">${esc(citations)}</p></div>`;
-  }
-
-  // Governance flags
-  const flags = Array.isArray(governance) ? governance : (governance ? [governance] : []);
-  const realFlags = flags.filter(f => f && f !== 'None');
-  if (realFlags.length > 0) {
-    html += '<div class="tier-label">Governance Flags</div>';
-    html += '<div class="section-card">';
-    for (const f of realFlags) html += `<p style="font-size:14px;color:var(--text-secondary);margin-bottom:8px">${esc(typeof f === 'string' ? f : JSON.stringify(f))}</p>`;
-    html += '</div>';
-  }
-
-  // Footer
-  html += '<div class="footer">';
-  html += 'Generated by <strong>Syllogos</strong> using the CRAF 4.0 framework.<br>';
-  html += 'AI-generated assessments should be interpreted alongside expert judgment.';
-  html += '</div>';
-
-  document.getElementById('app').innerHTML = html;
-  document.title = `Syllogos — ${title}`;
-}
-
-function esc(str) {
-  if (!str) return '';
-  const div = document.createElement('div');
-  div.textContent = String(str);
-  return div.innerHTML;
-}
-
-async function loadReport() {
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get('slug');
-
-  if (!slug) {
-    document.getElementById('app').innerHTML = '<div class="error">No report slug provided.</div>';
-    return;
-  }
-
-  try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/shared_reports?slug=eq.${encodeURIComponent(slug)}&select=*`,
-      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
-    );
-
-    if (!res.ok) throw new Error('Failed to fetch report');
-
-    const data = await res.json();
-    if (!data || data.length === 0) {
-      document.getElementById('app').innerHTML = '<div class="error">Report not found or has expired.</div>';
-      return;
-    }
-
-    renderReport(data[0]);
-  } catch (err) {
-    document.getElementById('app').innerHTML = `<div class="error">Failed to load report: ${esc(err.message)}</div>`;
-  }
-}
-
-loadReport();
+async function L(){const s=new URLSearchParams(location.search).get('slug');if(!s){document.getElementById('app').innerHTML='<div class="er">No report slug provided.</div>';return}try{const r=await fetch(`${U}/rest/v1/shared_reports?slug=eq.${encodeURIComponent(s)}&select=*`,{headers:{'apikey':K,'Authorization':`Bearer ${K}`}});if(!r.ok)throw new Error('Fetch failed');const d=await r.json();if(!d||!d.length){document.getElementById('app').innerHTML='<div class="er">Report not found or expired.</div>';return}R(d[0]);}catch(x){document.getElementById('app').innerHTML=`<div class="er">Failed to load: ${e(x.message)}</div>`;}}
+L();
 </script>
 </body>
 </html>
