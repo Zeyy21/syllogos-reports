@@ -1,23 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Syllogos Report</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231a1a2e'/%3E%3Cpath d='M16 6l-2 4 2 4-4 2 4 2-2 4 2 4 2-4-2-4 4-2-4-2 2-4z' fill='%237c9cff' stroke='%237c9cff' stroke-width='0.5' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0c0c0f;--surface:rgba(255,255,255,0.03);--surface-2:rgba(255,255,255,0.06);--surface-3:rgba(255,255,255,0.09);--glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);--text:#f0ede8;--text-sec:rgba(240,237,232,0.55);--text-tri:rgba(240,237,232,0.3);--accent:#7c9cff;--accent-dim:rgba(124,156,255,0.12);--green:#4ade80;--green-dim:rgba(74,222,128,0.12);--amber:#fbbf24;--amber-dim:rgba(251,191,36,0.12);--red:#f87171;--red-dim:rgba(248,113,113,0.12);--pink:#f472b6;--teal:#2dd4bf;--purple:#a78bfa;--border:rgba(255,255,255,0.06);--r:16px;--rs:10px}
+/* === THEME VARIABLES === */
+[data-theme="dark"]{
+  --bg:#0c0c0f;--surface:rgba(255,255,255,0.03);--surface-2:rgba(255,255,255,0.06);--surface-3:rgba(255,255,255,0.09);
+  --glass:rgba(255,255,255,0.04);--glass-border:rgba(255,255,255,0.08);
+  --text:#f0ede8;--text-sec:rgba(240,237,232,0.55);--text-tri:rgba(240,237,232,0.3);
+  --accent:#7c9cff;--accent-dim:rgba(124,156,255,0.12);
+  --green:#4ade80;--green-dim:rgba(74,222,128,0.12);
+  --amber:#fbbf24;--amber-dim:rgba(251,191,36,0.12);
+  --red:#f87171;--red-dim:rgba(248,113,113,0.12);
+  --pink:#f472b6;--teal:#2dd4bf;--purple:#a78bfa;
+  --border:rgba(255,255,255,0.06);
+  --glow1:rgba(124,156,255,0.06);--glow2:rgba(167,139,250,0.04);--glow3:rgba(45,212,191,0.03);
+  --toggle-bg:var(--surface-2);--toggle-icon:'🌙';
+}
+[data-theme="light"]{
+  --bg:#f8f7f4;--surface:rgba(0,0,0,0.02);--surface-2:rgba(0,0,0,0.04);--surface-3:rgba(0,0,0,0.06);
+  --glass:rgba(255,255,255,0.7);--glass-border:rgba(0,0,0,0.08);
+  --text:#1c1917;--text-sec:rgba(28,25,23,0.6);--text-tri:rgba(28,25,23,0.35);
+  --accent:#4a6cf7;--accent-dim:rgba(74,108,247,0.08);
+  --green:#16a34a;--green-dim:rgba(22,163,74,0.1);
+  --amber:#d97706;--amber-dim:rgba(217,119,6,0.1);
+  --red:#dc2626;--red-dim:rgba(220,38,38,0.1);
+  --pink:#db2777;--teal:#0d9488;--purple:#7c3aed;
+  --border:rgba(0,0,0,0.08);
+  --glow1:rgba(74,108,247,0.04);--glow2:rgba(124,58,237,0.03);--glow3:rgba(13,148,136,0.02);
+  --toggle-bg:var(--surface-2);--toggle-icon:'☀️';
+}
+
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh}
-body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 20% 50%,rgba(124,156,255,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(167,139,250,0.04) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,rgba(45,212,191,0.03) 0%,transparent 50%);pointer-events:none;z-index:0}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;min-height:100vh;transition:background 0.3s,color 0.3s}
+body::before{content:'';position:fixed;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 20% 50%,var(--glow1) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,var(--glow2) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,var(--glow3) 0%,transparent 50%);pointer-events:none;z-index:0}
+
+/* Theme toggle */
+.theme-toggle{position:fixed;top:20px;right:20px;z-index:100;width:40px;height:40px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-border);backdrop-filter:blur(12px);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:all 0.3s;color:var(--text)}
+.theme-toggle:hover{background:var(--surface-3);transform:scale(1.05)}
+
 .c{max-width:780px;margin:0 auto;padding:48px 24px 80px;position:relative;z-index:1}
-.brand{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;color:var(--accent);margin-bottom:32px;padding:8px 16px;background:var(--accent-dim);border:1px solid rgba(124,156,255,0.15);border-radius:100px}
+
+/* Logo + brand */
+.logo-row{display:flex;align-items:center;gap:12px;margin-bottom:36px}
+.logo-icon{width:32px;height:32px;flex-shrink:0}
+.logo-text{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;letter-spacing:0.3em;text-transform:uppercase;color:var(--text)}
+.logo-sub{font-size:10px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-top:2px}
+
+.action-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);padding:6px 14px;background:var(--accent-dim);border:1px solid rgba(124,156,255,0.15);border-radius:100px;margin-bottom:24px}
+
 h1{font-family:'Instrument Serif',serif;font-size:clamp(28px,5vw,40px);font-weight:400;font-style:italic;line-height:1.2;margin-bottom:20px;letter-spacing:-0.01em}
 .mr{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:40px}
-.pill{font-size:12px;font-weight:500;padding:5px 12px;border-radius:100px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-sec)}
+.pill{font-size:12px;font-weight:500;padding:5px 12px;border-radius:100px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-sec);transition:all 0.3s}
 .pill-g{background:var(--green-dim);border-color:rgba(74,222,128,0.2);color:var(--green)}
-.sh{text-align:center;padding:48px 24px;background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r);margin-bottom:48px;backdrop-filter:blur(20px);position:relative;overflow:hidden}
+
+.sh{text-align:center;padding:48px 24px;background:var(--glass);border:1px solid var(--glass-border);border-radius:16px;margin-bottom:48px;backdrop-filter:blur(20px);position:relative;overflow:hidden;transition:all 0.3s}
 .sh::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
 .sl{font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-tri);margin-bottom:12px}
 .sn{font-family:'Instrument Serif',serif;font-size:64px;font-style:italic;line-height:1}.sn span{font-size:28px;color:var(--text-tri);font-style:normal}
@@ -26,77 +68,93 @@ h2{font-family:'Instrument Serif',serif;font-size:24px;font-weight:400;font-styl
 .st{font-size:15px;color:var(--text-sec);line-height:1.85;margin-bottom:48px}
 .tl{font-size:10px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-tri);margin-bottom:16px;margin-top:48px;padding-left:2px}
 .ig{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:32px}
-.ic{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--rs);padding:20px}
+.ic{background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;padding:20px;transition:all 0.3s}
 .il{font-size:10px;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-tri);margin-bottom:6px}
 .iv{font-size:18px;font-weight:700}
-.co{background:var(--accent-dim);border:1px solid rgba(124,156,255,0.12);border-left:3px solid var(--accent);border-radius:var(--rs);padding:24px;margin-bottom:40px;font-size:15px;line-height:1.8;font-style:italic}
-.cl{font-size:10px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-style:normal}
-.dc{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--rs);padding:24px;margin-bottom:10px;transition:background 0.2s}
+.co{background:var(--accent-dim);border:1px solid rgba(124,156,255,0.12);border-left:3px solid var(--accent);border-radius:10px;padding:24px;margin-bottom:40px;font-size:15px;line-height:1.8;font-style:italic;transition:all 0.3s}
+.cla{font-size:10px;font-weight:800;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;font-style:normal}
+.dc{background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;padding:24px;margin-bottom:10px;transition:all 0.2s}
 .dc:hover{background:var(--surface-2)}
 .dh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
 .dn{font-weight:700;font-size:14px}
 .ds{font-family:'Instrument Serif',serif;font-size:24px;font-style:italic}
 .db{height:3px;background:var(--surface-3);border-radius:2px;margin-bottom:12px;overflow:hidden}
-.df{height:100%;border-radius:2px}
+.df{height:100%;border-radius:2px;transition:width 0.6s ease}
 .dm{display:flex;gap:12px;align-items:center;margin-bottom:14px;font-size:12px;color:var(--text-tri)}
 .lb{font-size:11px;font-weight:600;padding:2px 10px;border-radius:100px}
 .le{background:var(--green-dim);color:var(--green)}.ls{background:var(--accent-dim);color:var(--accent)}.la{background:var(--amber-dim);color:var(--amber)}.lw{background:var(--red-dim);color:var(--red)}
 .cd{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:4px;vertical-align:middle}
 .ch{background:var(--green)}.cm{background:var(--amber)}.clo{background:var(--red)}
-.ei{font-size:13px;color:var(--text-sec);padding:10px 16px;border-left:2px solid var(--border);margin-bottom:8px;line-height:1.65}
-.rb{font-size:14px;background:var(--surface-2);padding:16px 20px;border-radius:8px;margin-top:14px;line-height:1.75;border:1px solid var(--border)}
-.fc{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--rs);padding:20px;margin-bottom:10px}
+.ei{font-size:13px;color:var(--text-sec);padding:10px 16px;border-left:2px solid var(--border);margin-bottom:8px;line-height:1.65;transition:all 0.3s}
+.rb{font-size:14px;background:var(--surface-2);padding:16px 20px;border-radius:8px;margin-top:14px;line-height:1.75;border:1px solid var(--border);transition:all 0.3s}
+.fc{background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;padding:20px;margin-bottom:10px;transition:all 0.3s}
 .fq{font-style:italic;font-size:14px;color:var(--text-sec);margin-bottom:10px;line-height:1.7}
 .fd{font-size:13px;color:var(--text-tri);line-height:1.6}
 .sb{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:0.05em}
 .sbh{background:var(--red-dim);color:var(--red)}.sbm{background:var(--amber-dim);color:var(--amber)}.sbl{background:var(--accent-dim);color:var(--accent)}
-.gf{background:var(--amber-dim);border:1px solid rgba(251,191,36,0.15);border-radius:var(--rs);padding:16px 20px;margin-bottom:10px;font-size:14px;color:var(--amber);line-height:1.7}
+.gf{background:var(--amber-dim);border:1px solid rgba(251,191,36,0.15);border-radius:10px;padding:16px 20px;margin-bottom:10px;font-size:14px;color:var(--amber);line-height:1.7;transition:all 0.3s}
 .ft{margin-top:72px;padding-top:24px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--text-tri);line-height:2}
 .ft strong{color:var(--text-sec);font-weight:600}
 .ld{text-align:center;padding:160px 24px;font-size:14px;color:var(--text-sec)}
-.ls2{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:sp 0.8s linear infinite;margin:0 auto 16px}
+.lsp{width:24px;height:24px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:sp 0.8s linear infinite;margin:0 auto 16px}
 @keyframes sp{to{transform:rotate(360deg)}}
 .er{text-align:center;padding:160px 24px;font-size:14px;color:var(--red)}
-@media(max-width:600px){.c{padding:32px 16px 60px}.sn{font-size:48px}}
+@media(max-width:600px){.c{padding:32px 16px 60px}.sn{font-size:48px}.theme-toggle{top:12px;right:12px}}
 </style>
 </head>
 <body>
-<div class="c" id="app"><div class="ld"><div class="ls2"></div>Loading report...</div></div>
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme" id="themeBtn">🌙</button>
+<div class="c" id="app"><div class="ld"><div class="lsp"></div>Loading report...</div></div>
 <script>
-const U='https://nxyfxhfgrpkmzszlogxm.supabase.co',K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54eWZ4aGZncnBrbXpzemxvZ3htIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjM3MjksImV4cCI6MjA5NDUzOTcyOX0.e7aUVjz7Jw8pZfxKKlRCceU6eQEhyVKd8niPZ6qWQEA';
+function toggleTheme(){const h=document.documentElement;const t=h.getAttribute('data-theme')==='dark'?'light':'dark';h.setAttribute('data-theme',t);document.getElementById('themeBtn').textContent=t==='dark'?'🌙':'☀️';try{localStorage.setItem('syllogos-theme',t)}catch(e){}}
+try{const s=localStorage.getItem('syllogos-theme');if(s){document.documentElement.setAttribute('data-theme',s);document.getElementById('themeBtn').textContent=s==='dark'?'🌙':'☀️';}}catch(e){}
+
+const SU='https://nxyfxhfgrpkmzszlogxm.supabase.co',SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54eWZ4aGZncnBrbXpzemxvZ3htIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5NjM3MjksImV4cCI6MjA5NDUzOTcyOX0.e7aUVjz7Jw8pZfxKKlRCceU6eQEhyVKd8niPZ6qWQEA';
 const DL={methodological_rigor:'Methodological Rigor',scientific_validity:'Scientific Validity',originality_contribution:'Originality & Contribution',theoretical_consistency:'Theoretical Consistency',literature_mastery:'Literature Mastery',source_credibility:'Source Credibility',writing_quality:'Writing Quality',peer_evaluation_status:'Peer Evaluation Status',objectivity_reflexivity:'Objectivity & Reflexivity',implicit_legitimacy:'Implicit Legitimacy'};
 const DC={methodological_rigor:'#7c9cff',scientific_validity:'#7c9cff',originality_contribution:'#2dd4bf',literature_mastery:'#2dd4bf',theoretical_consistency:'#a78bfa',writing_quality:'#a78bfa',source_credibility:'#fbbf24',peer_evaluation_status:'#fbbf24',objectivity_reflexivity:'#f472b6',implicit_legitimacy:'#f472b6'};
-const T={'Epistemic Core':['methodological_rigor','scientific_validity','originality_contribution','theoretical_consistency'],'Scholarly Craft':['literature_mastery','source_credibility','writing_quality','peer_evaluation_status'],'Socio-Epistemic Context':['objectivity_reflexivity','implicit_legitimacy']};
-function cc(c){return c>=.7?'ch':c>=.3?'cm':'clo'}function cl2(c){return c>=.7?'High':c>=.3?'Moderate':'Low'}function lc(l){const k=(l||'').toLowerCase();return k.includes('exemplary')?'le':k.includes('strong')?'ls':k.includes('adequate')?'la':'lw'}function sc(s){const k=(s||'').toLowerCase();return k==='high'?'sbh':k==='medium'?'sbm':'sbl'}function e(s){if(!s)return'';const d=document.createElement('div');d.textContent=String(s);return d.innerHTML}function cn(c){return typeof c==='number'?c:c==='HIGH'?.9:c==='MEDIUM'?.6:.3}
+const TI={'Epistemic Core':['methodological_rigor','scientific_validity','originality_contribution','theoretical_consistency'],'Scholarly Craft':['literature_mastery','source_credibility','writing_quality','peer_evaluation_status'],'Socio-Epistemic Context':['objectivity_reflexivity','implicit_legitimacy']};
+const LOGO_SVG='<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-icon"><rect width="32" height="32" rx="8" fill="var(--accent-dim)" stroke="var(--glass-border)"/><path d="M16 6l-2 4 2 4-4 2 4 2-2 4 2 4 2-4-2-4 4-2-4-2 2-4z" fill="var(--accent)" stroke="var(--accent)" stroke-width="0.5" stroke-linejoin="round"/></svg>';
+
+function cc(c){return c>=.7?'ch':c>=.3?'cm':'clo'}function cl(c){return c>=.7?'High':c>=.3?'Moderate':'Low'}function lc(l){const k=(l||'').toLowerCase();return k.includes('exemplary')?'le':k.includes('strong')?'ls':k.includes('adequate')?'la':'lw'}function sc(s){const k=(s||'').toLowerCase();return k==='high'?'sbh':k==='medium'?'sbm':'sbl'}function e(s){if(!s)return'';const d=document.createElement('div');d.textContent=String(s);return d.innerHTML}function cn(c){return typeof c==='number'?c:c==='HIGH'?.9:c==='MEDIUM'?.6:.3}
 
 function R(r){
 const d=r.report_data;if(!d){document.getElementById('app').innerHTML='<div class="er">Report data is empty.</div>';return}
 const dims=d.dimensions||d.dimensionScores||d.componentScores||(d.humanReview&&d.humanReview.criticalDimensions?d.humanReview.criticalDimensions:[])||[];
 const title=r.title||d.title||'Untitled',score=d.compositeScore||d.composite_score||d.overallScore||null,conf=d.overallConfidence||d.confidence||(d.metadata&&d.metadata.confidence)||'',summary=d.assessmentSummary||d.assessment_summary||d.summary||'',disc=d.detectedDiscipline||d.detected_discipline||'',cross=d.crossDimensionalNotes||d.cross_dimensional_notes||'',weakest=d.weakestDimensions||d.weakest_dimensions||'',bias=d.biasHeatMap||d.bias_heatmap||d.biasHeatmap||[],cite=d.citationIntegrity||d.citation_integrity||null,gov=d.governanceFlags||d.governance_flags||[],model=d.model||(d.metadata&&d.metadata.model)||'',action=d.actionId||d.action||'',tone=d.tone||'',reading=d.readingLevel||'',thesis=d.keyThesis||'',ba=d.humanReview&&d.humanReview.biasAudit||'',fm=d.humanReview&&d.humanReview.failureModeAnalysis||'',al=d.aiLimitations||'',dt=r.created_at?new Date(r.created_at).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}):'';
 let h='';
-h+=`<div class="brand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>Syllogos &mdash; CRAF 4.0</div>`;
+
+// Logo
+h+=`<div class="logo-row">${LOGO_SVG}<div><div class="logo-text">Syllogos</div><div class="logo-sub">CRAF 4.0 Assessment Report</div></div></div>`;
+
+if(action)h+=`<div class="action-badge">${e(action.replace(/_/g,' '))}</div>`;
 h+=`<h1>${e(title)}</h1>`;
 h+='<div class="mr">';if(model)h+=`<span class="pill">${e(model)}</span>`;if(dt)h+=`<span class="pill">${dt}</span>`;if(conf)h+=`<span class="pill pill-g">${e(String(conf).toUpperCase())} CONF</span>`;h+='</div>';
+
 if(score!==null){h+='<div class="sh"><div class="sl">Composite Credibility Score</div>';h+=`<div class="sn">${score}<span> / 10</span></div>`;if(disc)h+=`<div class="dt">${e(disc)}</div>`;h+='</div>';}
+
 if(summary){h+='<h2>Assessment</h2>';h+=`<div class="st">${e(summary).replace(/\n\n/g,'</div><div class="st">').replace(/\n/g,'<br>')}</div>`;}
+
 if(tone||reading){h+='<div class="ig">';if(tone)h+=`<div class="ic"><div class="il">Tone</div><div class="iv">${e(tone)}</div></div>`;if(reading)h+=`<div class="ic"><div class="il">Reading Level</div><div class="iv">${e(reading)}</div></div>`;h+='</div>';}
-if(thesis){h+=`<div class="co"><div class="cl">Key Thesis</div>${e(thesis)}</div>`;}
+if(thesis)h+=`<div class="co"><div class="cla">Key Thesis</div>${e(thesis)}</div>`;
+
 const isC=dims.length>0&&dims[0]&&(dims[0].dimension||dims[0].rationale);
-if(isC){for(const[tn,tk]of Object.entries(T)){const td=dims.filter(x=>tk.includes(x.dimension||x.name||''));if(!td.length)continue;h+=`<div class="tl">${tn}</div>`;for(const dm of td){const k=dm.dimension||dm.name||'',lb=DL[k]||k,c=cn(dm.confidence),col=DC[k]||'#7c9cff',p=Math.min((dm.score/10)*100,100);h+='<div class="dc">';h+=`<div class="dh"><span class="dn">${e(lb)}</span><span class="ds">${dm.score}</span></div>`;h+=`<div class="db"><div class="df" style="width:${p}%;background:${col}"></div></div>`;h+='<div class="dm">';if(dm.level)h+=`<span class="lb ${lc(dm.level)}">${e(dm.level)}</span>`;h+=`<span><span class="cd ${cc(c)}"></span>${cl2(c)}</span>`;h+='</div>';const ev=dm.evidence||[];for(const x of ev)h+=`<div class="ei">${e(x)}</div>`;if(dm.rationale)h+=`<div class="rb">${e(dm.rationale)}</div>`;h+='</div>';}}
-const ak=Object.values(T).flat();const ug=dims.filter(x=>!ak.includes(x.dimension||x.name||''));if(ug.length){h+='<div class="tl">Additional</div>';for(const dm of ug){h+='<div class="dc">';h+=`<div class="dh"><span class="dn">${e(DL[dm.dimension]||dm.dimension||'')}</span><span class="ds">${dm.score}</span></div>`;if(dm.rationale)h+=`<div class="rb">${e(dm.rationale)}</div>`;h+='</div>';}}}
-else if(dims.length>0){h+='<div class="tl">Assessment Dimensions</div>';for(const dm of dims){const lb=dm.criterion||dm.name||'Dimension',mx=dm.maxScore||10,c=cn(dm.confidence),p=Math.min((dm.score/mx)*100,100);h+='<div class="dc">';h+=`<div class="dh"><span class="dn">${e(lb)}</span><span class="ds">${dm.score}<span style="font-size:14px;color:var(--text-tri)">/${mx}</span></span></div>`;h+=`<div class="db"><div class="df" style="width:${p}%;background:var(--accent)"></div></div>`;h+=`<div class="dm"><span><span class="cd ${cc(c)}"></span>${cl2(c)}</span></div>`;const ev=dm.evidence||[];for(const x of ev)h+=`<div class="ei">${e(x)}</div>`;h+='</div>';}}
-if(cross){h+='<div class="tl">Cross-Dimensional Analysis</div>';h+=`<div class="co"><div class="cl">Patterns</div>${e(cross)}</div>`;}
+if(isC){for(const[tn,tk]of Object.entries(TI)){const td=dims.filter(x=>tk.includes(x.dimension||x.name||''));if(!td.length)continue;h+=`<div class="tl">${tn}</div>`;for(const dm of td){const k=dm.dimension||dm.name||'',lb=DL[k]||k,c=cn(dm.confidence),col=DC[k]||'#7c9cff',p=Math.min((dm.score/10)*100,100);h+='<div class="dc">';h+=`<div class="dh"><span class="dn">${e(lb)}</span><span class="ds">${dm.score}</span></div>`;h+=`<div class="db"><div class="df" style="width:${p}%;background:${col}"></div></div>`;h+='<div class="dm">';if(dm.level)h+=`<span class="lb ${lc(dm.level)}">${e(dm.level)}</span>`;h+=`<span><span class="cd ${cc(c)}"></span>${cl(c)}</span>`;h+='</div>';const ev=dm.evidence||[];for(const x of ev)h+=`<div class="ei">${e(x)}</div>`;if(dm.rationale)h+=`<div class="rb">${e(dm.rationale)}</div>`;h+='</div>';}}
+const ak=Object.values(TI).flat();const ug=dims.filter(x=>!ak.includes(x.dimension||x.name||''));if(ug.length){h+='<div class="tl">Additional</div>';for(const dm of ug){h+='<div class="dc">';h+=`<div class="dh"><span class="dn">${e(DL[dm.dimension]||dm.dimension||'')}</span><span class="ds">${dm.score}</span></div>`;if(dm.rationale)h+=`<div class="rb">${e(dm.rationale)}</div>`;h+='</div>';}}}
+else if(dims.length>0){h+='<div class="tl">Assessment Dimensions</div>';for(const dm of dims){const lb=dm.criterion||dm.name||'Dimension',mx=dm.maxScore||10,c=cn(dm.confidence),p=Math.min((dm.score/mx)*100,100);h+='<div class="dc">';h+=`<div class="dh"><span class="dn">${e(lb)}</span><span class="ds">${dm.score}<span style="font-size:14px;color:var(--text-tri)">/${mx}</span></span></div>`;h+=`<div class="db"><div class="df" style="width:${p}%;background:var(--accent)"></div></div>`;h+=`<div class="dm"><span><span class="cd ${cc(c)}"></span>${cl(c)}</span></div>`;const ev=dm.evidence||[];for(const x of ev)h+=`<div class="ei">${e(x)}</div>`;h+='</div>';}}
+
+if(cross){h+='<div class="tl">Cross-Dimensional Analysis</div>';h+=`<div class="co"><div class="cla">Patterns</div>${e(cross)}</div>`;}
 if(weakest){h+='<div class="tl">Areas for Improvement</div>';h+=`<div class="fc"><div class="fd" style="color:var(--text-sec)">${e(weakest)}</div></div>`;}
-const rb=(bias||[]).filter(b=>b.passage&&b.passage!=='N/A');if(rb.length){h+='<div class="tl">Bias Heatmap</div>';for(const b of rb){h+='<div class="fc">';h+=`<div class="fq">"${e(b.passage)}"</div>`;h+=`<div><span class="sb ${sc(b.severity)}">${e(b.severity)}</span> <span style="font-size:12px;color:var(--text-tri);margin-left:8px">${e(b.bias_type||b.biasType||'')}</span></div>`;if(b.explanation)h+=`<div class="fd" style="margin-top:10px">${e(b.explanation)}</div>`;h+='</div>';}}
+const rb=(bias||[]).filter(b=>b.passage&&b.passage!=='N/A');if(rb.length){h+='<div class="tl">Bias Heatmap</div>';for(const b of rb){h+='<div class="fc">';h+=`<div class="fq">&ldquo;${e(b.passage)}&rdquo;</div>`;h+=`<div><span class="sb ${sc(b.severity)}">${e(b.severity)}</span> <span style="font-size:12px;color:var(--text-tri);margin-left:8px">${e(b.bias_type||b.biasType||'')}</span></div>`;if(b.explanation)h+=`<div class="fd" style="margin-top:10px">${e(b.explanation)}</div>`;h+='</div>';}}
 if(ba){h+='<div class="tl">Bias Audit</div>';h+=`<div class="fc"><div class="fd" style="color:var(--text-sec)">${e(ba)}</div></div>`;}
 if(cite&&typeof cite==='string'&&cite!=='No issues detected'&&cite!=='No data'){h+='<div class="tl">Citation Integrity</div>';h+=`<div class="fc"><div class="fd" style="color:var(--text-sec)">${e(cite)}</div></div>`;}
 const fl=Array.isArray(gov)?gov:(gov?[gov]:[]);const rf=fl.filter(f=>f&&f!=='None');if(rf.length){h+='<div class="tl">Governance Flags</div>';for(const f of rf)h+=`<div class="gf">${e(typeof f==='string'?f:JSON.stringify(f))}</div>`;}
 if(fm){h+='<div class="tl">Failure Mode Analysis</div>';h+=`<div class="fc"><div class="fd" style="color:var(--text-sec)">${e(fm)}</div></div>`;}
 if(al&&typeof al==='object'){h+='<div class="tl">AI Limitations</div>';h+='<div class="fc">';for(const[k,v]of Object.entries(al)){if(v)h+=`<div class="fd" style="margin-bottom:12px;color:var(--text-sec)"><strong style="color:var(--text)">${e(k.replace(/([A-Z])/g,' $1').trim())}:</strong> ${e(v)}</div>`;}h+='</div>';}
-h+='<div class="ft">Generated by <strong>Syllogos</strong> using the CRAF 4.0 framework.<br>AI-generated assessments should be interpreted alongside expert judgment.</div>';
+
+h+=`<div class="ft"><div style="margin-bottom:8px">${LOGO_SVG.replace('class="logo-icon"','style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:6px"')}</div>Generated by <strong>Syllogos</strong> using the CRAF 4.0 framework.<br>AI-generated assessments should be interpreted alongside expert judgment.</div>`;
 document.getElementById('app').innerHTML=h;document.title='Syllogos \u2014 '+title;}
 
-async function L(){const s=new URLSearchParams(location.search).get('slug');if(!s){document.getElementById('app').innerHTML='<div class="er">No report slug provided.</div>';return}try{const r=await fetch(`${U}/rest/v1/shared_reports?slug=eq.${encodeURIComponent(s)}&select=*`,{headers:{'apikey':K,'Authorization':`Bearer ${K}`}});if(!r.ok)throw new Error('Fetch failed');const d=await r.json();if(!d||!d.length){document.getElementById('app').innerHTML='<div class="er">Report not found or expired.</div>';return}R(d[0]);}catch(x){document.getElementById('app').innerHTML=`<div class="er">Failed to load: ${e(x.message)}</div>`;}}
+async function L(){const s=new URLSearchParams(location.search).get('slug');if(!s){document.getElementById('app').innerHTML='<div class="er">No report slug provided.</div>';return}try{const r=await fetch(`${SU}/rest/v1/shared_reports?slug=eq.${encodeURIComponent(s)}&select=*`,{headers:{'apikey':SK,'Authorization':`Bearer ${SK}`}});if(!r.ok)throw new Error('Fetch failed');const d=await r.json();if(!d||!d.length){document.getElementById('app').innerHTML='<div class="er">Report not found or expired.</div>';return}R(d[0]);}catch(x){document.getElementById('app').innerHTML=`<div class="er">Failed to load: ${e(x.message)}</div>`;}}
 L();
 </script>
 </body>
